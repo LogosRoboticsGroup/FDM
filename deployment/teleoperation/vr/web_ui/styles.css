@@ -1,0 +1,9 @@
+:root { color-scheme: dark; font-family: system-ui, sans-serif; }
+body { margin: 0; background: #101418; color: #eef2f5; }
+main { position: fixed; z-index: 2; inset: 1rem auto auto 1rem; padding: 1rem; background: #182028e8; border-radius: .75rem; }
+h1 { margin: 0 0 .5rem; font-size: 1.2rem; }
+.actions { display: flex; gap: .5rem; }
+button { padding: .6rem .9rem; border: 0; border-radius: .4rem; font-weight: 650; cursor: pointer; }
+.danger { background: #d13d3d; color: white; }
+.hint { margin-bottom: 0; color: #aebbc5; font-size: .9rem; }
+a-scene { position: fixed !important; inset: 0; }

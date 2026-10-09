@@ -1,0 +1,140 @@
+# Shared configuration for ARX teleop, record, replay and inference.
+robot_type: arx_x5
+runtime:
+  hardware_access: true
+  motion_enabled: true
+  control_hz: 60
+vr:
+  bind_host: 192.168.50.91
+  https_port: 8443
+  websocket_port: 8442
+  tls_cert_path: examples/ARX/secrets/server.crt
+  tls_key_path: examples/ARX/secrets/server.key
+  allowed_origins:
+  - https://192.168.50.91:8443
+  position_scale:
+  - 1
+  - 1
+  - 1
+  rotation_scale: 1
+  smoothing_alpha: 0.4
+  stale_timeout_s: 0.25
+  vr_to_robot:
+  - - 0
+    - 0
+    - -1
+  - - -1
+    - 0
+    - 0
+  - - 0
+    - 1
+    - 0
+arms:
+  left:
+    can_interface: can0
+    hand: left
+    control_backend: host_ik
+    ik_execution_mode: inline
+    tool_from_j6_xyz_mm_rpy_deg:
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    home_joints_deg:
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    home_gripper_open_fraction: null
+    gripper_enabled: true
+    gripper_max_width_m: 0.088
+    arx:
+      gripper_open_readout: -3.08328
+      home_duration_s: 5
+      feedback_timeout_s: 0.25
+      gripper_velocity_limit_m_s: 0.2
+      gripper_max_closing_error_m: 0.01
+  right:
+    can_interface: can1
+    hand: right
+    control_backend: host_ik
+    ik_execution_mode: inline
+    tool_from_j6_xyz_mm_rpy_deg:
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    home_joints_deg:
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    home_gripper_open_fraction: null
+    gripper_enabled: true
+    gripper_max_width_m: 0.088
+    arx:
+      gripper_open_readout: -3.05428
+      home_duration_s: 5
+      feedback_timeout_s: 0.25
+      gripper_velocity_limit_m_s: 0.2
+      gripper_max_closing_error_m: 0.01
+recording:
+  enabled: true
+  root: results/arx_vr
+  repo_id: local/arx_vr
+  task: pick up the object and place it in the target area
+  fps: 30
+  video: true
+  video_encoding_workers: 3
+  resume: false
+  async_queue_size: 8
+  home_timeout_s: 60
+  home_tolerance_deg: 2
+  cameras:
+    third_view:
+      type: intelrealsense
+      serial_number_or_name: '254622079438'
+      width: 640
+      height: 480
+      fps: 30
+      color_mode: rgb
+    left_wrist:
+      type: intelrealsense
+      serial_number_or_name: '409122274696'
+      width: 640
+      height: 480
+      fps: 30
+      color_mode: rgb
+    right_wrist:
+      type: intelrealsense
+      serial_number_or_name: '260322273813'
+      width: 640
+      height: 480
+      fps: 30
+      color_mode: rgb
+inference:
+  server: 127.0.0.1:5555
+  stat_key: piper
+  prompt: pick up the object and place it in the target area
+  camera_order:
+  - observation.images.third_view
+  - observation.images.left_wrist
+  - observation.images.right_wrist
+  fps: 30
+  n_execute: 5
+  state_dim: 14
+  action_dim: 14
+  action_space: cartesian
+  strict_server_metadata: true
+  home_on_start: true
+  home_timeout_s: 60
+  home_tolerance_deg: 1
+controls: vr

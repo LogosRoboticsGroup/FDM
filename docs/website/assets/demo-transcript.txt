@@ -1,0 +1,37 @@
+Forward Dynamics Model — video transcript
+
+Forward Dynamics Model: learn from the future, act in the present.
+
+FDM uses future prediction to improve action learning across two backbone families.
+
+VLA predicts actions directly. Future-conditioned WAM predicts futures first. FDM reverses this dependency.
+
+The generation branch reads action hidden states. Future-loss gradients supervise the action expert.
+
+Context and action features condition future prediction. Future information cannot flow back into action inputs.
+
+Mixture-of-transformers attention connects context, action, and generation through hidden states.
+
+Asymmetric attention blocks both direct and indirect future-information leakage into the action policy.
+
+With a video backbone, future flow-matching loss trains the action expert through its hidden states.
+
+With a vision-language backbone, FDM directly regresses future-image latents, using an MSE objective.
+
+The video instantiation predicts future video through iterative denoising with one-way access to action features.
+
+At inference, keep current-observation processing and action prediction. Future generation is optional.
+
+Both instantiations use future supervision during training while supporting action-only deployment.
+
+Five real-robot tasks, four methods, and three camera views. Recordings play at original speed.
+
+Drawer packing. The third view sits above both wrist views. Shorter recordings hold their final frame.
+
+Box packing and closing. Four methods perform the same task, shown at 1x speed.
+
+Shuttlecock insertion. The three camera views show each policy's execution from complementary angles.
+
+Paper-cup stacking. Compare grasping, placement, and task completion across the four methods.
+
+Block stacking. Individual recordings illustrate behavior; aggregate success rates are reported in the paper.

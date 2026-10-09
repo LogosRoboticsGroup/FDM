@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f5f0">
+  <title>Forward Dynamics Model — FDM</title>
+  <meta name="description" content="FDM learns robotic actions with future-state supervision, then acts without generating the future. Explore the method and real-robot comparisons.">
+  <meta property="og:title" content="Forward Dynamics Model">
+  <meta property="og:description" content="Learn from the future. Act in the present. Action-to-future learning for robotic manipulation.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://logosroboticsgroup.github.io/FDM/assets/social.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/fonts/libre-caslon-display.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header wrap">
+  <a class="wordmark" href="#main" aria-label="FDM home"><svg viewBox="0 0 40 32" aria-hidden="true"><path d="M4 24V8h12v16h12V8h8M16 16h12"/></svg>FDM<span>Robot learning</span></a>
+  <nav aria-label="Main navigation"><a href="#method">Method</a><a href="#experiments">Experiments</a><a href="https://github.com/LogosRoboticsGroup/FDM" class="repo-link">Code <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a></nav>
+</header>
+<main id="main">
+  <section class="hero wrap" aria-labelledby="page-title">
+    <div class="hero-heading">
+      <h1 id="page-title">Forward<br>Dynamics Model</h1>
+      <div class="hero-intro"><p class="tagline">Learn from the future.<br>Act in the present.</p><p>A robot policy that learns from what happens next, without generating the future at inference.</p>
+      <div class="resource-links"><a class="text-link" href="https://github.com/LogosRoboticsGroup/FDM">Explore the code <span aria-hidden="true">↗</span></a></div></div>
+    </div>
+    <figure class="demo-figure" id="demo">
+      <div class="demo-stage">
+        <video id="demo-video" controls playsinline preload="none" poster="assets/cover-drawer.png" aria-label="Forward Dynamics Model research overview" aria-describedby="demo-caption">
+          <source src="assets/demo.mp4" type="video/mp4">
+          <track kind="captions" src="assets/demo.en.vtt" srclang="en" label="English" default>
+          Your browser does not support embedded video. <a href="assets/demo-captioned.mp4">Download the captioned demo.</a>
+        </video>
+        <div class="demo-cover" hidden aria-hidden="true">
+          <img class="cover-drawer" src="assets/cover-drawer.png" alt="" width="640" height="480">
+          <img class="cover-box" src="assets/cover-box.png" alt="" width="640" height="480">
+          <img class="cover-shuttlecock" src="assets/cover-shuttlecock.png" alt="" width="640" height="480">
+        </div>
+        <button class="demo-launch" id="demo-launch" hidden aria-label="Play the complete project presentation"><span class="play-disc"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 11 7-11 7Z"/></svg></span><span>Watch the overview<small>6 min 26 sec · English captions</small></span></button>
+      </div>
+      <figcaption id="demo-caption"><span>From action features to future supervision.</span><a href="assets/demo-captioned.mp4" download>Download captioned video <span aria-hidden="true">↓</span></a></figcaption>
+    </figure>
+    <nav class="demo-chapters" aria-label="Video chapters"><button type="button" data-seek="0">Introduction</button><button type="button" data-seek="12">Architecture</button><button type="button" data-seek="22">Method</button><button type="button" data-seek="119">Robot experiments</button></nav>
+    <details class="transcript"><summary>Video transcript</summary><p>FDM learns robotic actions with supervision from future world states. Unlike future-conditioned actions, FDM predicts future states from action features. During training, future prediction errors backpropagate through action features into the policy. At inference, FDM uses the current observation and instruction, skipping future generation.</p><p>The final sequences compare FDM w/ VLM, FDM w/ VGM, π₀.₅, and FastWAM-Joint on a dual-arm ARX-X5: drawer packing, box packing and closing, shuttlecock insertion, paper-cup stacking, and block stacking. All five embedded experiment videos play in full at 1× speed. <a href="assets/demo-transcript.txt">Read the full English transcript</a>.</p></details>
+    <div class="credits">
+      <p class="authors"><a href="https://xiao10ma.github.io/">Zipei Ma<sup>1,2</sup></a><a href="https://selfspin.github.io/">Junzhe Jiang<sup>1</sup></a><span>Jiahui Zhang<sup>1</sup></span><span>Juntong Zhang<sup>2</sup></span><span>Chun Gu<sup>1,2</sup></span><span>Bozhou Zhang<sup>1</sup></span><span>Jiankang Deng<sup>3</sup></span><a href="https://x-up-lab.github.io/">Xiatian Zhu<sup>4</sup></a><a href="https://lzrobots.github.io/">Li Zhang<sup>1,2</sup></a></p>
+      <p class="affiliations"><span><sup>1</sup> Fudan University</span><span><sup>2</sup> Shanghai Innovation Institute</span><span><sup>3</sup> Imperial College London</span><span><sup>4</sup> University of Surrey</span></p>
+    </div>
+  </section>
+
+  <section class="method-section section wrap" id="method" aria-labelledby="method-title">
+    <div class="section-heading"><h2 id="method-title">What if actions<br>came before the future?</h2><p>Future world states are a rich learning signal. FDM uses them to train action features, while keeping predicted futures out of the action path.</p></div>
+    <figure class="paper-figure"><a href="assets/archi_compare.pdf" aria-label="Open architecture comparison as a full-resolution PDF"><img src="assets/archi_compare.webp" width="2048" height="911" loading="lazy" alt="VLA predicts actions directly. A future-conditioned WAM generates future video before actions. FDM predicts actions first and uses their features for future prediction during training."></a><figcaption><span>Three paradigms, one key difference: the direction of conditioning.</span><a href="assets/archi_compare.pdf">Full-resolution figure <span aria-hidden="true">↗</span></a></figcaption></figure>
+    <div class="architecture-notes"><div><h3>VLA</h3><p>Predict actions from observations and language, without explicit future-state supervision.</p></div><div><h3>Future-conditioned WAM</h3><p>Generate futures to predict actions. Visual prediction errors can affect the policy.</p></div><div class="ours"><h3>FDM <span>Our approach</span></h3><p>Predict futures from action features. Learn from future states; deploy with action-only inference.</p></div></div>
+  </section>
+
+  <section class="pipeline-section section" id="pipeline" aria-labelledby="pipeline-title">
+    <div class="wrap">
+      <div class="section-heading"><h2 id="pipeline-title">A learning signal.<br>Not an inference dependency.</h2><p>Three expert roles, one directional connection. The future-prediction loss flows back through the features that produce actions.</p></div>
+      <div class="mode-controls" role="group" aria-label="Pipeline mode"><button type="button" class="selected" data-mode="training" aria-pressed="true">During training</button><button type="button" data-mode="inference" aria-pressed="false">At inference</button></div>
+      <div class="pipeline-display" id="pipeline-display" data-mode="training">
+        <div class="expert context-expert"><span class="expert-role">Observation + instruction</span><h3>Context expert</h3><p>Understand the scene<br>and the task.</p></div>
+        <svg class="flow-arrow" viewBox="0 0 64 24" aria-hidden="true"><path d="M2 12h56m-9-8 9 8-9 8"/></svg>
+        <div class="expert action-expert"><span class="expert-role">Action features</span><h3>Action expert</h3><p>Predict the robot’s<br>next actions.</p></div>
+        <svg class="flow-arrow generation-path" viewBox="0 0 64 24" aria-hidden="true"><path d="M2 12h56m-9-8 9 8-9 8"/></svg>
+        <div class="expert generation-expert"><span class="expert-role">Future-state supervision</span><h3>Generation expert</h3><p>Predict the consequences<br>from action features.</p><span class="skipped">Skipped at inference</span></div>
+        <div class="supervision-path"><svg viewBox="0 0 500 45" preserveAspectRatio="none" aria-hidden="true"><path d="M485 3v30H15V3m-7 9 7-9 7 9"/></svg><span>Future loss supervises action features</span></div>
+      </div>
+      <p class="mode-explanation" id="mode-explanation" aria-live="polite">Train jointly with action imitation and future prediction. Asymmetric attention blocks future information from reaching actions, including through context.</p>
+      <details class="technical-figure"><summary>Explore the full MoT pipeline</summary><figure class="paper-figure"><a href="assets/pipeline.pdf"><img src="assets/pipeline.webp" width="1575" height="494" loading="lazy" alt="Mixture-of-transformers pipeline. Context and action experts connect to a generation expert. Its future loss backpropagates through action features; inference retains context and action processing."></a><figcaption>Original pipeline from the paper. <a href="assets/pipeline.pdf">Open PDF</a></figcaption></figure></details>
+      <div class="backbones"><h3>One principle.<br>Two backbone families.</h3><div><h4>FDM w/ VLM</h4><p>A π₀.₅ / PaliGemma policy with direct regression of future-image latents. One future image per camera view, supervised with MSE.</p><a href="https://github.com/LogosRoboticsGroup/FDM/blob/HEAD/starVLA/model/framework/VLM4A/Pi05_causal.py">VLM implementation <span aria-hidden="true">↗</span></a></div><div><h4>FDM w/ VGM</h4><p>A Wan2.2 video backbone with flow matching on future-video latents. Current-observation processing remains in the action path.</p><a href="https://github.com/LogosRoboticsGroup/FDM/blob/HEAD/starVLA/model/framework/WM4A/WanMoT_causal.py">VGM implementation <span aria-hidden="true">↗</span></a></div></div>
+    </div>
+  </section>
+
+  <section class="section wrap results-section" id="results" aria-labelledby="results-title">
+    <div class="section-heading"><h2 id="results-title">Learning that carries<br>into the real world.</h2><p>Evaluated in simulation and on a dual-arm ARX-X5 robot. Results below are reported in the paper.</p></div>
+    <div class="results-strip"><div><strong>99.4<span>%</span></strong><h3>LIBERO average success</h3><p>FDM w/ VLM · four task suites</p></div><div><strong>+13<span> pp</span></strong><h3>Real-world success gain</h3><p>Up to 13 percentage points over compared baselines</p></div><div><strong>1.8<span>×</span></strong><h3>Faster action inference</h3><p>FDM w/ VGM vs. FastWAM-Joint · one H100</p></div></div>
+    <details class="benchmark-details"><summary>See benchmark results and inference latency</summary><div class="table-scroll"><table><caption>Simulation success rates (%), as reported in the manuscript.</caption><thead><tr><th scope="col">Model</th><th scope="col">LIBERO average</th><th scope="col">RoboTwin clean</th><th scope="col">RoboTwin randomized</th><th scope="col">RoboTwin average</th></tr></thead><tbody><tr><th scope="row">FDM w/ VLM</th><td>99.4</td><td>81.54</td><td>80.86</td><td>81.20</td></tr><tr><th scope="row">FDM w/ VGM</th><td>98.1</td><td>88.84</td><td>89.62</td><td>89.23</td></tr></tbody></table></div><p class="latency-note">Action-chunk latency on one H100: π₀.₅ 203.77 ms; FDM w/ VLM 202.98 ms; FastWAM-Joint 446.55 ms; FDM w/ VGM 253.45 ms. Comparisons use matched settings within each backbone family.</p></details>
+  </section>
+
+  <section class="experiments-section section" id="experiments" aria-labelledby="experiments-title">
+    <div class="wrap">
+      <div class="section-heading"><h2 id="experiments-title">See the policies in action.</h2><p>Five manipulation tasks. Four methods. Three camera views. Explore the original real-robot recordings side by side.</p></div>
+      <div class="task-picker" role="group" aria-label="Select a robot task"><button type="button" data-task="drawer" aria-pressed="true" class="selected">Drawer packing</button><button type="button" data-task="gift" aria-pressed="false">Box packing</button><button type="button" data-task="badminton" aria-pressed="false">Shuttlecock insertion</button><button type="button" data-task="cup" aria-pressed="false">Cup stacking</button><button type="button" data-task="cube" aria-pressed="false">Block stacking</button></div>
+      <div class="experiment-toolbar"><p class="view-layout">Third view on top · Left + right wrist below</p><div class="playback-controls"><label for="speed">Speed</label><select id="speed"><option value="1">1×</option><option value="0.5">0.5×</option><option value="2">2×</option></select><button type="button" id="restart-all">Restart</button><button type="button" id="play-all" class="primary">Play all</button></div></div>
+      <p id="task-description" class="task-description">Place the objects in the drawer and close it.</p>
+      <div id="comparison-grid" class="comparison-grid"></div>
+      <noscript><p>Enable JavaScript to switch tasks and play comparisons. You can also <a href="assets/comparisons/drawer/FDM-VLM.mp4">watch the drawer-packing FDM w/ VLM recording</a>.</p></noscript>
+      <p id="playback-status" class="playback-status" role="status">Select a task, then play the four recordings together.</p>
+      <p class="experiment-note">Each video combines a 640 × 480 third view above two 320 × 240 wrist views. All views start together; shorter recordings hold their final frame. Displayed duration is the recording length, not model inference latency. Individual clips illustrate behavior; aggregate success uses 20 trials per method per task.</p>
+      <details class="real-results"><summary>View aggregate real-robot success rates</summary><figure class="paper-figure"><img src="assets/real_results_bar.webp" width="2152" height="620" loading="lazy" alt="Paper figure comparing per-task and average success over five real-robot tasks, with 20 trials per method per task. Both FDM variants outperform their corresponding comparison methods on average."><figcaption>Per-task and average success rates from the paper. <a href="assets/real_results_bar.pdf">Open full-resolution PDF</a></figcaption></figure></details>
+    </div>
+  </section>
+
+  <section class="section wrap citation-section" id="citation" aria-labelledby="citation-title"><div><h2 id="citation-title">Build on FDM.</h2><p>Code, training configurations, and evaluation instructions are available in the repository.</p><a class="button primary" href="https://github.com/LogosRoboticsGroup/FDM">View on GitHub <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a></div><div class="citation-block"><div class="citation-heading"><h3>Citation</h3><button type="button" id="copy-citation">Copy BibTeX</button></div><pre id="bibtex">@misc{ma2026forward,
+  title = {Forward Dynamics Model},
+  author = {Ma, Zipei and Jiang, Junzhe and
+    Zhang, Jiahui and Zhang, Juntong and
+    Gu, Chun and Zhang, Bozhou and
+    Deng, Jiankang and Zhu, Xiatian and Zhang, Li},
+  year = {2026},
+  url = {https://github.com/LogosRoboticsGroup/FDM}
+}</pre><p class="copy-status" id="copy-status" role="status"></p></div></section>
+</main>
+<footer class="site-footer wrap"><a class="wordmark" href="#main">FDM</a><p>Forward Dynamics Model</p><a href="https://github.com/LogosRoboticsGroup/FDM/blob/HEAD/LICENSE">License</a><a href="#main">Back to top <span aria-hidden="true">↑</span></a></footer>
+</body>
+</html>

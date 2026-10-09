@@ -1,0 +1,82 @@
+{
+  "badminton/FDM-VGM.mp4": {
+    "duration": 29.17,
+    "missing_views": []
+  },
+  "badminton/FDM-VLM.mp4": {
+    "duration": 36.23,
+    "missing_views": []
+  },
+  "badminton/FastWAM-joint.mp4": {
+    "duration": 29.27,
+    "missing_views": []
+  },
+  "badminton/pi0.5.mp4": {
+    "duration": 48.33,
+    "missing_views": []
+  },
+  "cube/FDM-VGM.mp4": {
+    "duration": 27.77,
+    "missing_views": []
+  },
+  "cube/FDM-VLM.mp4": {
+    "duration": 26.13,
+    "missing_views": []
+  },
+  "cube/FastWAM-joint.mp4": {
+    "duration": 37.37,
+    "missing_views": []
+  },
+  "cube/pi0.5.mp4": {
+    "duration": 24.83,
+    "missing_views": []
+  },
+  "cup/FDM-VGM.mp4": {
+    "duration": 67.13,
+    "missing_views": []
+  },
+  "cup/FDM-VLM.mp4": {
+    "duration": 57.93,
+    "missing_views": []
+  },
+  "cup/FastWAM-joint.mp4": {
+    "duration": 64.43,
+    "missing_views": []
+  },
+  "cup/pi0.5.mp4": {
+    "duration": 58.57,
+    "missing_views": []
+  },
+  "drawer/FDM-VGM.mp4": {
+    "duration": 53.13,
+    "missing_views": []
+  },
+  "drawer/FDM-VLM.mp4": {
+    "duration": 48.57,
+    "missing_views": []
+  },
+  "drawer/FastWAM-joint.mp4": {
+    "duration": 67.3,
+    "missing_views": []
+  },
+  "drawer/pi0.5.mp4": {
+    "duration": 50.57,
+    "missing_views": []
+  },
+  "gift/FDM-VGM.mp4": {
+    "duration": 39.57,
+    "missing_views": []
+  },
+  "gift/FDM-VLM.mp4": {
+    "duration": 40.2,
+    "missing_views": []
+  },
+  "gift/FastWAM-joint.mp4": {
+    "duration": 46.73,
+    "missing_views": []
+  },
+  "gift/pi0.5.mp4": {
+    "duration": 42.9,
+    "missing_views": []
+  }
+}

@@ -1,0 +1,23 @@
+policy_name: model2robotwin_interface
+task_name: null
+task_config: null
+ckpt_setting: null
+seed: 42
+instruction_type: unseen
+
+# StarVLA Client Parameters
+host: "127.0.0.1"
+port: 5694
+unnorm_key: null  # use the checkpoint data configuration
+action_mode: "abs"
+normalization_mode: "z_score"  # documentation only; checkpoint controls server normalization
+
+# FastWAM configs/sim_robotwin.yaml effective evaluation defaults.
+eval_num_episodes: 100
+replan_steps: 24
+num_inference_steps: null  # omit override: checkpoint framework.action_model.num_inference_steps, else 10
+action_horizon: null  # use checkpoint framework.action_model.action_horizon
+num_video_frames: null  # derive from checkpoint horizon / future_frame_stride + 1
+sigma_shift: null  # use the checkpoint scheduler
+skip_get_obs_within_replan: true
+image_size: null  # preserve camera pixels for model-side preprocessing

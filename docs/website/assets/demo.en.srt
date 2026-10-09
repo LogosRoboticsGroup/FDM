@@ -1,0 +1,71 @@
+1
+00:00:00,000 --> 00:00:05,000
+Forward Dynamics Model: learn from the future, act in the present.
+
+2
+00:00:05,000 --> 00:00:12,000
+FDM uses future prediction to improve action learning across two backbone families.
+
+3
+00:00:12,000 --> 00:00:22,000
+VLA predicts actions directly. Future-conditioned WAM predicts futures first. FDM reverses this dependency.
+
+4
+00:00:22,000 --> 00:00:29,000
+The generation branch reads action hidden states. Future-loss gradients supervise the action expert.
+
+5
+00:00:29,000 --> 00:00:38,000
+Context and action features condition future prediction. Future information cannot flow back into action inputs.
+
+6
+00:00:38,000 --> 00:00:48,000
+Mixture-of-transformers attention connects context, action, and generation through hidden states.
+
+7
+00:00:48,000 --> 00:01:00,000
+Asymmetric attention blocks both direct and indirect future-information leakage into the action policy.
+
+8
+00:01:00,000 --> 00:01:10,000
+With a video backbone, future flow-matching loss trains the action expert through its hidden states.
+
+9
+00:01:10,000 --> 00:01:20,000
+With a vision-language backbone, FDM directly regresses future-image latents, using an MSE objective.
+
+10
+00:01:20,000 --> 00:01:32,000
+The video instantiation predicts future video through iterative denoising with one-way access to action features.
+
+11
+00:01:32,000 --> 00:01:41,000
+At inference, keep current-observation processing and action prediction. Future generation is optional.
+
+12
+00:01:41,000 --> 00:01:51,000
+Both instantiations use future supervision during training while supporting action-only deployment.
+
+13
+00:01:51,000 --> 00:01:59,000
+Five real-robot tasks, four methods, and three camera views. Recordings play at original speed.
+
+14
+00:01:59,000 --> 00:02:11,000
+Drawer packing. The third view sits above both wrist views. Shorter recordings hold their final frame.
+
+15
+00:03:06,300 --> 00:03:18,300
+Box packing and closing. Four methods perform the same task, shown at 1x speed.
+
+16
+00:03:53,067 --> 00:04:05,067
+Shuttlecock insertion. The three camera views show each policy's execution from complementary angles.
+
+17
+00:04:41,433 --> 00:04:53,433
+Paper-cup stacking. Compare grasping, placement, and task completion across the four methods.
+
+18
+00:05:48,600 --> 00:06:00,600
+Block stacking. Individual recordings illustrate behavior; aggregate success rates are reported in the paper.

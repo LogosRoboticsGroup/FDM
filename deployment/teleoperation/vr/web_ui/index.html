@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>StarVLA WebXR Teleoperation</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="vendor/aframe.min.js"></script>
+  <script src="runtime-config.js"></script>
+</head>
+<body>
+  <main>
+    <h1>StarVLA WebXR</h1>
+    <p id="status">Disconnected</p>
+    <div class="actions">
+      <button id="enter-vr">Enter VR</button>
+    </div>
+    <p class="hint">Left X: start recording · Trigger: move · Squeeze: gripper · Right A: stop / home / save · Right B: stop / home / discard</p>
+  </main>
+  <a-scene embedded xr-mode-ui="enabled: false"
+           renderer="colorManagement: true; highRefreshRate: true"
+           background="color: #0b1220">
+    <a-sky color="#0b1220"></a-sky>
+    <a-entity light="type: ambient; color: #ffffff; intensity: 0.7"></a-entity>
+    <a-entity light="type: directional; color: #ffffff; intensity: 0.8" position="1 3 2"></a-entity>
+
+    <a-plane position="0 0 -2" rotation="-90 0 0" width="12" height="12" color="#1e293b"
+             material="shader: flat"></a-plane>
+    <a-circle position="0 0.006 -2" rotation="-90 0 0" radius="0.35" color="#334155"
+              material="shader: flat"></a-circle>
+    <a-box position="0.5 0.025 -2" width="1" height="0.05" depth="0.04" color="#ef4444"></a-box>
+    <a-box position="0 0.025 -1.5" width="0.04" height="0.05" depth="1" color="#3b82f6"></a-box>
+
+    <a-entity position="0 1.6 -2.2">
+      <a-plane width="3.2" height="1.6" color="#172033" material="shader: flat; opacity: 0.96"></a-plane>
+      <a-text value="STARVLA WEBXR PREVIEW" align="center" color="#f8fafc" width="3.2"
+              font="vendor/fonts/Roboto-msdf.json" position="0 0.34 0.01"></a-text>
+      <a-text value="NO PIPER HARDWARE ACCESS" align="center" color="#22d3ee" width="2.6"
+              font="vendor/fonts/Roboto-msdf.json" position="0 0.08 0.01"></a-text>
+      <a-text id="vr-status" value="Network: connecting" align="center" color="#cbd5e1" width="2.4"
+              font="vendor/fonts/Roboto-msdf.json" position="0 -0.13 0.01"></a-text>
+      <a-text id="input-status" value="L trigger: 0.00\nR trigger: 0.00" align="center" color="#fbbf24" width="2.35"
+              font="vendor/fonts/Roboto-msdf.json" position="0 -0.34 0.01"></a-text>
+      <a-text value="Left X: start | Trigger: move | Squeeze: gripper | A: stop/home/save | B: stop/home/discard"
+              align="center" color="#94a3b8" width="2.1"
+              font="vendor/fonts/Roboto-msdf.json" position="0 -0.69 0.01"></a-text>
+    </a-entity>
+
+    <a-entity id="left" laser-controls="hand: left" raycaster="showLine: true; far: 3; lineColor: #22d3ee">
+      <a-sphere radius="0.045" color="#22d3ee" material="shader: flat"></a-sphere>
+    </a-entity>
+    <a-entity id="right" laser-controls="hand: right" raycaster="showLine: true; far: 3; lineColor: #fb923c">
+      <a-sphere radius="0.045" color="#fb923c" material="shader: flat"></a-sphere>
+    </a-entity>
+    <a-camera position="0 1.6 0"></a-camera>
+  </a-scene>
+  <script src="app.js?v=14"></script>
+</body>
+</html>

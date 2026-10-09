@@ -1,0 +1,33 @@
+cff-version: 1.2.0
+title: Forward Dynamics Model
+message: If you use FDM in your research, please cite Forward Dynamics Model.
+type: software
+authors:
+  - family-names: Ma
+    given-names: Zipei
+  - family-names: Jiang
+    given-names: Junzhe
+  - family-names: Zhang
+    given-names: Jiahui
+  - family-names: Zhang
+    given-names: Juntong
+  - family-names: Gu
+    given-names: Chun
+  - family-names: Zhang
+    given-names: Bozhou
+  - family-names: Deng
+    given-names: Jiankang
+  - family-names: Zhu
+    given-names: Xiatian
+  - family-names: Zhang
+    given-names: Li
+repository-code: 'https://github.com/LogosRoboticsGroup/FDM'
+url: 'https://logosroboticsgroup.github.io/FDM/'
+abstract: >-
+  Robotic policies that learn through action-to-future prediction with
+  VLM and VGM backbones and support action-only inference.
+keywords:
+  - forward-dynamics
+  - robot-learning
+  - vision-language-action
+  - world-action-models
